@@ -1,0 +1,6 @@
+# OS X dust
+.DS_Store
+fuel/app/cache
+fuel/app/config/development
+fuel/app/logs
+fuel/app/tmp
