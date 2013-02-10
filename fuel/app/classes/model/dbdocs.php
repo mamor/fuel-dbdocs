@@ -28,7 +28,8 @@ class Model_Dbdocs extends \Orm\Model
 			),
 			'name' => array(
 				'label'      => false,
-				'validation' => array('trim', 'required', 'max_length' => array(255)),
+				'validation' => array('trim', 'required', 'max_length' => array(255),
+					'valid_string' => array(array('alpha', 'numeric', 'dashes'))),
 				'form'       => array('type' => 'text', 'placeholder' => 'Document name'),
 			),
 			/**
@@ -76,7 +77,8 @@ class Model_Dbdocs extends \Orm\Model
 			),
 			'name' => array(
 				'label'      => false,
-				'validation' => array('trim', 'required', 'max_length' => array(255)),
+				'validation' => array('trim', 'required', 'max_length' => array(255),
+					'valid_string' => array(array('alpha', 'numeric', 'dashes'))),
 				'form'       => array('type' => 'text', 'placeholder' => 'Document name'),
 			),
 			/**
@@ -124,7 +126,8 @@ class Model_Dbdocs extends \Orm\Model
 			),
 			'name' => array(
 				'label'      => false,
-				'validation' => array('trim', 'required', 'max_length' => array(255)),
+				'validation' => array('trim', 'required', 'max_length' => array(255),
+					'valid_string' => array(array('alpha', 'numeric', 'dashes'))),
 				'form'       => array('type' => 'text', 'placeholder' => 'Document name'),
 			),
 			/**
