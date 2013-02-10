@@ -18,6 +18,15 @@
 
 <?php echo Asset::css('bootstrap-responsive.min.css'); ?>
 
+<?php if (($webfont = Config::get('dbdocs.webfont', false)) !== false): ?>
+
+<link href="http://fonts.googleapis.com/css?family=<?php echo urlencode($webfont); ?>" rel="stylesheet" type="text/css">
+<style>
+body { font-family: "<?php echo $webfont; ?>", sans-serif; }
+</style>
+
+<?php endif; ?>
+
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 <?php echo Asset::js('bootstrap.min.js'); ?>
 

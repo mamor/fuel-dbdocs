@@ -25,5 +25,8 @@ return array(
 			'dbdocs',
 			'log',
 		),
+		'config' => array(
+			'dbdocs' => true,
+		),
 	),
 );
