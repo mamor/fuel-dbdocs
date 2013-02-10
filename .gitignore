@@ -4,3 +4,6 @@ fuel/app/cache
 fuel/app/config/development
 fuel/app/logs
 fuel/app/tmp
+crypt.php
+
+public/dbdocs

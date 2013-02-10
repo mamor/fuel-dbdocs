@@ -1,0 +1,11 @@
+{
+	"require": {
+		"doctrine/orm": "2.*",
+		"symfony/console": "2.*",
+		"symfony/yaml": "2.*",
+		"jdorn/sql-formatter" : "1.*"
+	},
+	"autoload": {
+		"psr-0": {"": "entities"}
+	}
+}

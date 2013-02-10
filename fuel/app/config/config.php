@@ -15,6 +15,15 @@
  * want to change here, and assign new values to them.
  */
 
-return array(
+ini_set('default_charset', 'UTF-8');
 
+return array(
+	'locale' => null,
+	'always_load' => array(
+		'packages' => array(
+			'orm',
+			'dbdocs',
+			'log',
+		),
+	),
 );
