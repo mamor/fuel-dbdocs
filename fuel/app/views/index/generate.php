@@ -2,9 +2,9 @@
 <?php echo Form::open(); ?>
 <?php echo Form::select('platform', isset($data['platform']) ? $data['platform'] : null, array(
 	'' => 'Select platform',
-	'mysql' => 'mysql',
-	'pgsql' => 'pgsql',
-	'sqlite' => 'sqlite',
+	'mysql' => 'MySQL',
+	'pgsql' => 'PostgreSQL',
+	'sqlite' => 'SQLite',
 )); ?>
 <?php echo Form::close(); ?>
 
