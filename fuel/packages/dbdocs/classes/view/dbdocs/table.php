@@ -37,7 +37,7 @@ class View_Dbdocs_Table extends View_Dbdocs_Base
 			}
 
 			$this->columns[$column->getName()] = array(
-				'type' => $column->getType(),
+				'type' => $column->getType()->getName(),
 				'length' => $column->getLength(),
 				'null' => ! $column->getNotnull(),
 				'default' => $column->getDefault(),
@@ -100,6 +100,45 @@ class View_Dbdocs_Table extends View_Dbdocs_Base
 			}
 
 		}
+
+		/**
+		 * get real information of columns
+		 */
+		$dd = Dbdocs::instance('default');
+		$platform = $dd->conn->getDatabasePlatform()->getName();
+
+		switch ($platform)
+		{
+			case 'mysql':
+				$rows = $dd->conn->executeQuery('
+					select
+						*
+					from
+						information_schema.columns
+					where
+						table_name = :table_name
+					order by
+						ordinal_position',
+					array('table_name' => $this->table_name))->fetchAll();
+
+				foreach ($rows as $row)
+				{
+					$real_columns[$row['COLUMN_NAME']] = array(
+						'type' => $row['DATA_TYPE'],
+						'length' => $row['CHARACTER_MAXIMUM_LENGTH'],
+						'null' => $row['IS_NULLABLE'] != 'NO',
+						'default' => $row['COLUMN_DEFAULT'],
+						'comment' => $row['COLUMN_COMMENT'],
+					);
+				}
+
+				break;
+			default :
+				$real_columns = array();
+				break;
+		}
+
+		$this->columns = \Arr::merge($this->columns, $real_columns);
 
 		$this->indexes = static::merge_indexes_and_foreign_keys($indexes, $foreign_keys, $table);
 
