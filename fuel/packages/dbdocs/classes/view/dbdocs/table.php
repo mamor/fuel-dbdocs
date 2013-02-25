@@ -25,10 +25,10 @@ class View_Dbdocs_Table extends View_Dbdocs_Base
 		$indexes = $table->getIndexes();
 		$foreign_keys = $table->getForeignKeys();
 
+		$functions = \Config::get('dbdocs.functions');
+
 		foreach ($table->getColumns() as $column)
 		{
-			$functions = \Config::get('dbdocs.functions');
-
 			/* @var $column \Doctrine\DBAL\Schema\Column */
 			$comment = \Security::htmlentities($column->getComment());
 			if (is_callable($functions['mod_comment']))
@@ -126,15 +126,14 @@ class View_Dbdocs_Table extends View_Dbdocs_Base
 					$real_columns[$row['COLUMN_NAME']] = array(
 						'type' => $row['DATA_TYPE'],
 						'length' => $row['CHARACTER_MAXIMUM_LENGTH'],
-						'null' => $row['IS_NULLABLE'] != 'NO',
 						'default' => $row['COLUMN_DEFAULT'],
-						'comment' => $row['COLUMN_COMMENT'],
 					);
 				}
 
 				break;
 			default :
 				$real_columns = array();
+
 				break;
 		}
 
