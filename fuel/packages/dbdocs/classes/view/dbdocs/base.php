@@ -70,21 +70,8 @@ abstract class View_Dbdocs_Base extends \Fuel\Core\ViewModel
 						}
 
 						$ret[$index->getName()]['extras'][] = 'FK';
-						$ret[$index->getName()]['foreign_key']['table_name'] = $foreign_key->getForeignTableName();
-
-						$foreign_key_columns = $foreign_key->getForeignColumns();
-						$ret[$index->getName()]['foreign_key']['column_name'] = $foreign_key_columns[0];
 					}
 
-				}
-
-				if ( ! isset($ret[$index->getName()]['foreign_key']))
-				{
-					if (is_callable($functions['mod_foreign_key']))
-					{
-						$ret[$index->getName()]['foreign_key'] = $functions['mod_foreign_key'](
-							$index_column_name, $table->getName());
-					}
 				}
 
 			}
