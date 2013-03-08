@@ -113,7 +113,7 @@ abstract class Dbdocs_TestCase extends TestCase
 				array(
 					'name' => 'text_column',
 					'type' => 'text',
-					'options' => array('unsigned' => true, 'comment' => 'This is a comment'),
+					'options' => array('unsigned' => true, 'comment' => 'This is a comment <script>xxx</script>'),
 				),
 			),
 			'primary_keys' => array('id'),

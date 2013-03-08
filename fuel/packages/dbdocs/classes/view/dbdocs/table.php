@@ -139,7 +139,7 @@ class View_Dbdocs_Table extends View_Dbdocs_Base
 				break;
 		}
 
-		$this->columns = \Arr::merge($this->columns, $real_columns);
+		$this->set('columns', \Arr::merge($this->columns, $real_columns), false);
 
 		$this->indexes = static::merge_indexes_and_foreign_keys($indexes, $foreign_keys, $table);
 

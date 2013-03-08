@@ -85,9 +85,10 @@ abstract class View_Dbdocs_Base extends \Fuel\Core\ViewModel
 	 */
 	public function render()
 	{
-		return \View::forge('dbdocs/template', array(
-			'active' => $this->active,
-			'content' => parent::render(),
-		))->render();
+		$view = \View::forge('dbdocs/template');
+		$view->set('active', $this->active);
+		$view->set('content', parent::render(), false);
+
+		return $view->render();
 	}
 }

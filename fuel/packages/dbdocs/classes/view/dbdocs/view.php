@@ -19,7 +19,7 @@ class View_Dbdocs_View extends View_Dbdocs_Base
 		$view = $this->__view;
 
 		$this->view_name = $view->getName();
-		$this->view_sql = \SqlFormatter::format($view->getSql());
+		$this->set('view_sql', \SqlFormatter::format($view->getSql()), false);
 
 	}
 
