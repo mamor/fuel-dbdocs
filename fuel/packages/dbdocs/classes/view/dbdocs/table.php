@@ -116,10 +116,12 @@ class View_Dbdocs_Table extends View_Dbdocs_Base
 					from
 						information_schema.columns
 					where
+						table_schema = :table_schema
+					and
 						table_name = :table_name
 					order by
 						ordinal_position',
-					array('table_name' => $this->table_name))->fetchAll();
+					array('table_name' => $this->table_name, 'table_schema' => $dd->conn->getDatabase()))->fetchAll();
 
 				foreach ($rows as $row)
 				{
