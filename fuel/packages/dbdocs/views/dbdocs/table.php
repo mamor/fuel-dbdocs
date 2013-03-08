@@ -61,7 +61,12 @@
 <script>
 (function($){
 	$.to_hashlink = function(targets) {
-		targets.each(function() {
+		targets.each(function(index) {
+			if (index == 0)
+			{
+				$("html, body").animate({ scrollTop: ($(this).offset().top + -75) + "px"});
+			}
+
 			$(this).addClass("hashlink");
 			$(this).css("opacity", "0.5");
 			$(this).fadeTo("slow", 1.0);
@@ -70,10 +75,13 @@
 })(jQuery);
 
 $(document).ready(function() {
+	$("a[href^='#']").click(function(){
+		window.location.hash = $(this).attr("href");
+	});
+
 	if (hash = window.location.hash)
 	{
 		$.to_hashlink($(hash.replace(/#/, ".")).closest("tr").children("td"));
-		
 	}
 
 	$(".to_hashlink").click(function() {
