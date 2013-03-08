@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <title>DBDocs</title>
 
-<link type="text/css" rel="stylesheet" href="assets/css/bootstrap.css" />
+<link type="text/css" rel="stylesheet" href="assets/css/bootstrap.min.css" />
 
 <style type="text/css">
 	body {
