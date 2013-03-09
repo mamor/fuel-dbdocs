@@ -5,6 +5,7 @@
 <title>DBDocs</title>
 
 <link type="text/css" rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
+<link type="text/css" rel="stylesheet" href="assets/chosen/chosen/chosen.css" />
 
 <style type="text/css">
 	body {
@@ -29,6 +30,7 @@ body { font-family: "<?php echo $webfont; ?>", sans-serif; }
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="assets/chosen/chosen/chosen.jquery.min.js"></script>
 <script src="assets/quicksearch/jquery.quicksearch.js"></script>
 <script type="text/javascript">
 $(document).ready(function () {
@@ -39,6 +41,29 @@ $(document).ready(function () {
 	});
 	$("._foreign_key").tooltip({
 		"placement" : "right"
+	});
+
+	$.ajax({
+		"url": "chosen.json?" + new Date().getTime(),
+		"type": "GET",
+		"dataType": "json",
+		"success": function(data) {
+			$.each(data.tables, function(index, array) {
+				$("#_global_search_tables").append(new Option(array["text"], array["href"]));
+			});
+			$.each(data.columns, function(index, array) {
+				$("#_global_search_columns").append(new Option(array["text"], array["href"]));
+			});
+			$.each(data.indexes, function(index, array) {
+				$("#_global_search_indexes").append(new Option(array["text"], array["href"]));
+			});
+			$.each(data.views, function(index, array) {
+				$("#_global_search_views").append(new Option(array["text"], array["href"]));
+			});
+			$("#_global_search").chosen().change(function(e) {
+				window.location = $(this).val();
+			});
+		}
 	});
 });
 </script>
@@ -56,6 +81,15 @@ $(document).ready(function () {
 <li<?php $active === 'indexes' and print(' class="active"'); ?>><a href="indexes.html">Indexes</a></li>
 <li<?php $active === 'views' and print(' class="active"'); ?>><a href="views.html">Views</a></li>
 </ul>
+<form class="navbar-form pull-left" style="margin-top:8px;">
+<select id="_global_search" style="width:500px;" />
+<option value="" disabled="disabled">Search</option>
+<optgroup id="_global_search_tables" label="Tables"></optgroup>
+<optgroup id="_global_search_columns" label="Columns"></optgroup>
+<optgroup id="_global_search_indexes" label="Indexes"></optgroup>
+<optgroup id="_global_search_views" label="Views"></optgroup>
+</select>
+</form>
 
 <ul class="nav pull-right">
 <li><a href="https://github.com/mp-php/fuel-dbdocs/issues" target="_blank">Issues</a></li>

@@ -306,7 +306,84 @@ class Dbdocs
 			\File::create($dir, 'view_'.$view->getName().'.html', $html);
 		}
 
+		/**
+		 * generate chosen.json
+		 */
+		\File::create($dir, 'chosen.json', static::get_chosen_json($tables, $views));
+
 		return true;
+	}
+
+	/*******************************************************
+	 * Private methods
+	 ******************************************************/
+	/**
+	 * Gets json for chosen
+	 *
+	 * @param  $tables array \Doctrine\DBAL\Schema\Table
+	 * @param  $views array \Doctrine\DBAL\Schema\View
+	 * @return json
+	 */
+	private static function get_chosen_json($tables, $views)
+	{
+		$ret = array(
+			'tables' => array(),
+			'columns' => array(),
+			'indexes' => array(),
+			'views' => array(),
+		);
+
+		foreach ($tables as $table)
+		{
+			/* @var $table \Doctrine\DBAL\Schema\Table */
+			$ret['tables'][] = array(
+				'text' => $table->getName(),
+				'href' => 'table_'.$table->getName().'.html',
+			);
+		}
+
+		foreach ($tables as $table)
+		{
+			foreach ($table->getColumns() as $column)
+			{
+				$random = \Str::random('unique');
+
+				/* @var $column \Doctrine\DBAL\Schema\Column */
+				$ret['columns'][] = array(
+					'text' => $column->getName().' / '.$table->getName(),
+					'href' => 'table_'.$table->getName().".html?{$random}#_column_".$column->getName(),
+				);
+			}
+		}
+
+		foreach ($tables as $table)
+		{
+			foreach ($table->getIndexes() as $index)
+			{
+				$column_names = $index->getColumns();
+
+				$random = \Str::random('unique');
+
+				/* @var $index \Doctrine\DBAL\Schema\Index */
+				$ret['indexes'][] = array(
+					'text' => $index->getName().' / '.$table->getName(),
+					'href' => 'table_'.$table->getName().".html?{$random}#_column_".$column_names[0],
+				);
+				
+			}
+		}
+
+		foreach ($views as $view)
+		{
+
+			/* @var $view \Doctrine\DBAL\Schema\View */
+			$ret['views'][] = array(
+				'text' => $view->getName(),
+				'href' => 'view_'.$table->getName().'.html',
+			);
+		}
+
+		return json_encode($ret);
 	}
 
 }
