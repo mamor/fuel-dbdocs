@@ -1,8 +1,9 @@
 # fuel-dbdocs [![Build Status](https://travis-ci.org/mp-php/fuel-dbdocs.png)](https://travis-ci.org/mp-php/fuel-dbdocs)
 
-fuel-dbdocs is generator for database documentation  
-You can generate database documentation from browser and command line  
-Example(GitLab Database): http://fueldbdocssample.madroom.net/index.html
+* fuel-dbdocs is generator for database documentation
+* You can generate database documentation from command line and browser
+* Example(GitLab Database) http://fueldbdocssample.madroom.net/index.html
+* Powered by FuelPHP http://fuelphp.com/
 
 ---
 
@@ -26,13 +27,13 @@ Download zip or git clone
 
 ## Usage
 
-### Browser
-
-Access public/index.php
-
 ### Command line
 
 	$ php oil r dbdocs:help
+
+### Browser
+
+Access public/index.php
 
 ## Test
 
