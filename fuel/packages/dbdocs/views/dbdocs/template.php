@@ -43,18 +43,18 @@ $(document).ready(function () {
 		"placement" : "right"
 	});
 
-	var data = <?php echo $chosen_json; ?>;
+	var chosen_json = <?php echo $chosen_json; ?>;
 
-	$.each(data.tables, function(index, array) {
+	$.each(chosen_json.tables, function(index, array) {
 		$("#_global_search_tables").append(new Option(array["text"], array["href"]));
 	});
-	$.each(data.columns, function(index, array) {
+	$.each(chosen_json.columns, function(index, array) {
 		$("#_global_search_columns").append(new Option(array["text"], array["href"]));
 	});
-	$.each(data.indexes, function(index, array) {
+	$.each(chosen_json.indexes, function(index, array) {
 		$("#_global_search_indexes").append(new Option(array["text"], array["href"]));
 	});
-	$.each(data.views, function(index, array) {
+	$.each(chosen_json.views, function(index, array) {
 		$("#_global_search_views").append(new Option(array["text"], array["href"]));
 	});
 	$("#_global_search").chosen().change(function(e) {
