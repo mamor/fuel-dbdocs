@@ -43,27 +43,22 @@ $(document).ready(function () {
 		"placement" : "right"
 	});
 
-	$.ajax({
-		"url": "chosen.json?" + new Date().getTime(),
-		"type": "GET",
-		"dataType": "json",
-		"success": function(data) {
-			$.each(data.tables, function(index, array) {
-				$("#_global_search_tables").append(new Option(array["text"], array["href"]));
-			});
-			$.each(data.columns, function(index, array) {
-				$("#_global_search_columns").append(new Option(array["text"], array["href"]));
-			});
-			$.each(data.indexes, function(index, array) {
-				$("#_global_search_indexes").append(new Option(array["text"], array["href"]));
-			});
-			$.each(data.views, function(index, array) {
-				$("#_global_search_views").append(new Option(array["text"], array["href"]));
-			});
-			$("#_global_search").chosen().change(function(e) {
-				window.location = $(this).val();
-			});
-		}
+	var data = <?php echo $chosen_json; ?>;
+
+	$.each(data.tables, function(index, array) {
+		$("#_global_search_tables").append(new Option(array["text"], array["href"]));
+	});
+	$.each(data.columns, function(index, array) {
+		$("#_global_search_columns").append(new Option(array["text"], array["href"]));
+	});
+	$.each(data.indexes, function(index, array) {
+		$("#_global_search_indexes").append(new Option(array["text"], array["href"]));
+	});
+	$.each(data.views, function(index, array) {
+		$("#_global_search_views").append(new Option(array["text"], array["href"]));
+	});
+	$("#_global_search").chosen().change(function(e) {
+		window.location = $(this).val();
 	});
 });
 </script>

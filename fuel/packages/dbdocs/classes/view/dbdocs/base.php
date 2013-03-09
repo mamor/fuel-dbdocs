@@ -85,8 +85,15 @@ abstract class View_Dbdocs_Base extends \Fuel\Core\ViewModel
 	 */
 	public function render()
 	{
+		$dd = \Dbdocs::instance('default');
+
 		$view = \View::forge('dbdocs/template');
+
 		$view->set('active', $this->active);
+
+		$chosen_json = $dd->get_chosen_json($dd->get_tables(), $dd->get_views());
+		$view->set('chosen_json', $chosen_json, false);
+
 		$view->set('content', parent::render(), false);
 
 		return $view->render();

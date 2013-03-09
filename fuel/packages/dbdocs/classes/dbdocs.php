@@ -308,17 +308,9 @@ class Dbdocs
 			\File::create($dir, 'view_'.$view->getName().'.html', $html);
 		}
 
-		/**
-		 * generate chosen.json
-		 */
-		\File::create($dir, 'chosen.json', static::get_chosen_json($tables, $views));
-
 		return true;
 	}
 
-	/*******************************************************
-	 * Private methods
-	 ******************************************************/
 	/**
 	 * Gets json for chosen
 	 *
@@ -326,7 +318,7 @@ class Dbdocs
 	 * @param  $views array \Doctrine\DBAL\Schema\View
 	 * @return json
 	 */
-	private static function get_chosen_json($tables, $views)
+	public function get_chosen_json($tables, $views)
 	{
 		$ret = array(
 			'tables' => array(),
