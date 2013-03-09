@@ -19,7 +19,7 @@ return array(
 			if (0 < preg_match('/^[0-9a-zA-Z_]+\.[0-9a-zA-Z_]+$/', $comment))
 			{
 				list($table_name, $column_name) = explode('.', $comment);
-				$comment = "<a href=\"table_{$table_name}.html#{$column_name}\">".$comment.'</a>';
+				$comment = "<a href=\"table_{$table_name}.html#_column_{$column_name}\">".$comment.'</a>';
 			}
 
 			return $comment;
