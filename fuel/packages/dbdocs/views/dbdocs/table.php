@@ -103,5 +103,7 @@ $(document).ready(function() {
 
 	$('input#_columns_search').quicksearch('table#_columns_table tbody tr');
 	$('input#_indexes_search').quicksearch('table#_indexes_table tbody tr');
+
+	$('input#_columns_search').focus();
 });
 </script>

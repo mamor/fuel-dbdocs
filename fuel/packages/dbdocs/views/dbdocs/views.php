@@ -27,5 +27,7 @@
 <script>
 $(document).ready(function() {
 	$('input#_views_search').quicksearch('table#_views_table tbody tr');
+
+	$('input#_views_search').focus();
 });
 </script>
