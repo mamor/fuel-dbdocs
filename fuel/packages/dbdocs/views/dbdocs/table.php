@@ -16,7 +16,7 @@
 <tbody>
 <?php foreach ($columns as $column_name => $column_infos): ?>
 <tr id="<?php echo $column_name; ?>" class="<?php echo $column_name; ?>">
-<td><a class="to_hashlink" href="#<?php echo $column_name; ?>"><?php echo isset($i) ? ++$i : $i = 1; ?></a></td>
+<td><a href="#<?php echo $column_name; ?>"><?php echo isset($i) ? ++$i : $i = 1; ?></a></td>
 <?php if(empty($column_infos['foreign_key']['table_name'])): ?>
 <td><?php echo $column_name; ?></td>
 <?php else: ?>
@@ -51,7 +51,7 @@
 <?php foreach ($indexes as $index_name => $index_infos): ?>
 <?php foreach ($index_infos['columns'] as $column_name): ?>
 <tr>
-<td><a class="to_hashlink <?php echo $column_name; ?>" href="#<?php echo $column_name; ?>"><?php echo $index_name; ?></a></td>
+<td><a class="<?php echo $column_name; ?>" href="#<?php echo $column_name; ?>"><?php echo $index_name; ?></a></td>
 <td><?php echo $column_name; ?></td>
 <td><span class="label label-info"><?php echo implode('</span> <span class="label label-info">', $index_infos['extras']); ?></span></td>
 </tr>
@@ -60,7 +60,7 @@
 </tbody>
 <script>
 (function($){
-	$.to_hashlink = function(targets) {
+	$.hashlink = function(targets) {
 		targets.each(function(index) {
 			if (index == 0)
 			{
@@ -77,20 +77,18 @@
 $(document).ready(function() {
 	$("a[href^='#']").click(function(){
 		window.location.hash = $(this).attr("href");
-	});
 
-	if (hash = window.location.hash)
-	{
-		$.to_hashlink($(hash.replace(/#/, ".")).closest("tr").children("td"));
-	}
-
-	$(".to_hashlink").click(function() {
 		$(".hashlink").each(function() {
 			$(this).removeClass("hashlink");
 		});
 
-		$.to_hashlink($($(this).attr("href").replace(/#/, ".")).closest("tr").children("td"));
+		$.hashlink($($(this).attr("href").replace(/#/, ".")).closest("tr").children("td"));
 	});
+
+	if (hash = window.location.hash)
+	{
+		$.hashlink($(hash.replace(/#/, ".")).closest("tr").children("td"));
+	}
 });
 </script>
 </table><!--/.table-->
