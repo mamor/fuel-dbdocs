@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <title>DBDocs</title>
 
-<link type="text/css" rel="stylesheet" href="assets/css/bootstrap.min.css" />
+<link type="text/css" rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
 
 <style type="text/css">
 	body {
@@ -16,7 +16,7 @@
 	}
 </style>
 
-<link type="text/css" rel="stylesheet" href="assets/css/bootstrap-responsive.min.css" />
+<link type="text/css" rel="stylesheet" href="assets/bootstrap/css/bootstrap-responsive.min.css" />
 
 <?php if (($webfont = Config::get('dbdocs.webfont', false)) !== false): ?>
 
@@ -28,7 +28,7 @@ body { font-family: "<?php echo $webfont; ?>", sans-serif; }
 <?php endif; ?>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
 <script src="assets/quicksearch/jquery.quicksearch.js"></script>
 <script type="text/javascript">
 $(document).ready(function () {
