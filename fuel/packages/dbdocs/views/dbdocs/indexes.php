@@ -1,6 +1,10 @@
 <h1>Indexes</h1>
 
-<table class="table table-bordered table-striped">
+<form class="form-search">
+<input id="_indexes_search" type="text" class="span2 search-query" placeholder="search">
+</form>
+
+<table id="_indexes_table" class="table table-bordered table-striped">
 <thead>
 <tr>
 <th style="width:25%;">Name</th>
@@ -30,3 +34,9 @@
 
 </tbody>
 </table><!--/.table-->
+
+<script>
+$(document).ready(function() {
+	$('input#_indexes_search').quicksearch('table#_indexes_table tbody tr');
+});
+</script>

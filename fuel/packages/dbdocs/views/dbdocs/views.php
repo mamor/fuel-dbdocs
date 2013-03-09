@@ -1,6 +1,10 @@
 <h1>Views</h1>
 
-<table class="table table-bordered table-striped">
+<form class="form-search">
+<input id="_views_search" type="text" class="span2 search-query" placeholder="search">
+</form>
+
+<table id="_views_table" class="table table-bordered table-striped">
 <thead>
 <tr>
 <th style="width:100%;">Name</th>
@@ -19,3 +23,9 @@
 
 </tbody>
 </table><!--/.table-->
+
+<script>
+$(document).ready(function() {
+	$('input#_views_search').quicksearch('table#_views_table tbody tr');
+});
+</script>

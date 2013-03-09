@@ -1,6 +1,10 @@
 <h1><a href="table_<?php echo $table_name; ?>.html"><?php echo $table_name; ?></a></h1>
 
-<table class="table table-bordered table-striped">
+<form class="form-search">
+<input id="_columns_search" type="text" class="span2 search-query" placeholder="search">
+</form>
+
+<table id="_columns_table" class="table table-bordered table-striped">
 <thead>
 <tr>
 <th style="width:5%;">No</th>
@@ -39,7 +43,12 @@
 <hr />
 
 <h2>Indexes</h2>
-<table class="table table-bordered table-striped">
+
+<form class="form-search">
+<input id="_indexes_search" type="text" class="span2 search-query" placeholder="search">
+</form>
+
+<table id="_indexes_table" class="table table-bordered table-striped">
 <thead>
 <tr>
 <th style="width:33%;">Name</th>
@@ -58,6 +67,8 @@
 <?php endforeach; ?>
 <?php endforeach; ?>
 </tbody>
+</table><!--/.table-->
+
 <script>
 (function($){
 	$.hashlink = function(targets) {
@@ -89,6 +100,8 @@ $(document).ready(function() {
 	{
 		$.hashlink($(hash.replace(/#/, ".")).closest("tr").children("td"));
 	}
+
+	$('input#_columns_search').quicksearch('table#_columns_table tbody tr');
+	$('input#_indexes_search').quicksearch('table#_indexes_table tbody tr');
 });
 </script>
-</table><!--/.table-->

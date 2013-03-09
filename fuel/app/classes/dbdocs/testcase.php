@@ -141,6 +141,14 @@ abstract class Dbdocs_TestCase extends TestCase
 			from
 				test,
 				test2',
+		'test_view_2' => '
+			select
+				test3.id as test3_id,
+				test3.name as test3_name,
+				test4.text_column as test4_text_column
+			from
+				test3,
+				test4',
 	);
 
 	/**

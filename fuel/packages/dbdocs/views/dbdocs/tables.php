@@ -1,6 +1,10 @@
 <h1>Tables</h1>
 
-<table class="table table-bordered table-striped">
+<form class="form-search">
+<input id="_tables_search" type="text" class="span2 search-query" placeholder="search">
+</form>
+
+<table id="_tables_table" class="table table-bordered table-striped">
 <thead>
 <tr>
 <th style="width:100%;">Name</th>
@@ -19,3 +23,9 @@
 
 </tbody>
 </table><!--/.table-->
+
+<script>
+$(document).ready(function() {
+	$('input#_tables_search').quicksearch('table#_tables_table tbody tr');
+});
+</script>

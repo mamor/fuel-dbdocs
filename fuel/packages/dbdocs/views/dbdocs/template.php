@@ -29,6 +29,7 @@ body { font-family: "<?php echo $webfont; ?>", sans-serif; }
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 <script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/quicksearch/jquery.quicksearch.js"></script>
 <script type="text/javascript">
 $(document).ready(function () {
 	$("._extra").tooltip({
