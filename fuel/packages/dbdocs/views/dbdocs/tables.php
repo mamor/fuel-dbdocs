@@ -1,7 +1,7 @@
 <h1>Tables</h1>
 
 <form class="form-search">
-<input id="_tables_search" type="text" class="span2 search-query" placeholder="search">
+<input id="_tables_search" type="text" class="span2 search-query" placeholder="Search">
 </form>
 
 <table id="_tables_table" class="table table-bordered table-striped">

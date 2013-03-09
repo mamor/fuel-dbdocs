@@ -1,7 +1,7 @@
 <h1>Indexes</h1>
 
 <form class="form-search">
-<input id="_indexes_search" type="text" class="span2 search-query" placeholder="search">
+<input id="_indexes_search" type="text" class="span2 search-query" placeholder="Search">
 </form>
 
 <table id="_indexes_table" class="table table-bordered table-striped">

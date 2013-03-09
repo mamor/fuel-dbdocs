@@ -1,7 +1,7 @@
 <h1>Views</h1>
 
 <form class="form-search">
-<input id="_views_search" type="text" class="span2 search-query" placeholder="search">
+<input id="_views_search" type="text" class="span2 search-query" placeholder="Search">
 </form>
 
 <table id="_views_table" class="table table-bordered table-striped">

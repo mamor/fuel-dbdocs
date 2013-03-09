@@ -1,7 +1,7 @@
 <h1><a href="table_<?php echo $table_name; ?>.html"><?php echo $table_name; ?></a></h1>
 
 <form class="form-search">
-<input id="_columns_search" type="text" class="span2 search-query" placeholder="search">
+<input id="_columns_search" type="text" class="span2 search-query" placeholder="Search">
 </form>
 
 <table id="_columns_table" class="table table-bordered table-striped">
@@ -45,7 +45,7 @@
 <h2>Indexes</h2>
 
 <form class="form-search">
-<input id="_indexes_search" type="text" class="span2 search-query" placeholder="search">
+<input id="_indexes_search" type="text" class="span2 search-query" placeholder="Search">
 </form>
 
 <table id="_indexes_table" class="table table-bordered table-striped">
