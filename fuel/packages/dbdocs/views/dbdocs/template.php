@@ -49,7 +49,7 @@ $(document).ready(function () {
 <div class="navbar-inner">
 <div class="container-fluid">
 
-<a class="brand" href="index.html">DBDocs</a>
+<a class="brand" href="index.html">DBDocs <?php echo e(Dbdocs::VERSION); ?></a>
 <ul class="nav">
 <li<?php $active === 'tables' and print(' class="active"'); ?>><a href="tables.html">Tables</a></li>
 <li<?php $active === 'indexes' and print(' class="active"'); ?>><a href="indexes.html">Indexes</a></li>

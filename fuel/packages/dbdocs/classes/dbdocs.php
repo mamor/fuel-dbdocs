@@ -13,6 +13,11 @@ class Dbdocs
 {
 
 	/**
+	 * @var string The version of Dbdocs
+	 */
+	const VERSION = '1.0-beta';
+
+	/**
 	 * default instance
 	 *
 	 * @var \Dbdocs\Dbdocs

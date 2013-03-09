@@ -34,7 +34,7 @@ body { font-family: "<?php echo $webfont; ?>", sans-serif; }
 <div class="navbar-inner">
 <div class="container-fluid">
 
-<a class="brand" href="<?php echo Uri::base(); ?>">DBDocs</a>
+<a class="brand" href="<?php echo Uri::base(); ?>">DBDocs <?php echo e(Dbdocs::VERSION); ?></a>
 <ul class="nav">
 	<li<?php $active === 'generate' and print(' class="active"'); ?>><?php echo Html::anchor('index/generate', 'Generate'); ?></li>
 </ul>
