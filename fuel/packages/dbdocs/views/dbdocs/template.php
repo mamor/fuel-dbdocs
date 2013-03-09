@@ -77,8 +77,8 @@ $(document).ready(function () {
 <li<?php $active === 'views' and print(' class="active"'); ?>><a href="views.html">Views</a></li>
 </ul>
 <form class="navbar-form pull-left" style="margin-top:8px;">
-<select id="_global_search" style="width:500px;" />
-<option value="" disabled="disabled">Search</option>
+<select id="_global_search" data-placeholder="Search" style="width:500px;" />
+<option value=""></option>
 <optgroup id="_global_search_tables" label="Tables"></optgroup>
 <optgroup id="_global_search_columns" label="Columns"></optgroup>
 <optgroup id="_global_search_indexes" label="Indexes"></optgroup>
