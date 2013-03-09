@@ -15,7 +15,7 @@ class Dbdocs
 	/**
 	 * @var string The version of Dbdocs
 	 */
-	const VERSION = '1.0-rc1';
+	const VERSION = '1.0-rc1.1';
 
 	/**
 	 * default instance
