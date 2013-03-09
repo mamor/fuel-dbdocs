@@ -51,15 +51,17 @@
 <table id="_indexes_table" class="table table-bordered table-striped">
 <thead>
 <tr>
-<th style="width:33%;">Name</th>
-<th style="width:34%;">Column</th>
-<th style="width:33%;">Extra <span class="_extra"><i class="icon-question-sign"></i></span></th>
+<th style="width:5%;">No</th>
+<th style="width:35%;">Name</th>
+<th style="width:30%;">Column</th>
+<th style="width:30%;">Extra <span class="_extra"><i class="icon-question-sign"></i></span></th>
 </tr>
 </thead>
 <tbody>
 <?php foreach ($indexes as $index_name => $index_infos): ?>
 <?php foreach ($index_infos['columns'] as $column_name): ?>
 <tr>
+<td><?php echo isset($j) ? ++$j : $j = 1; ?></td>
 <td><a class="_column_<?php echo $column_name; ?>" href="#_column_<?php echo $column_name; ?>"><?php echo $index_name; ?></a></td>
 <td><?php echo $column_name; ?></td>
 <td><span class="label label-info"><?php echo implode('</span> <span class="label label-info">', $index_infos['extras']); ?></span></td>
