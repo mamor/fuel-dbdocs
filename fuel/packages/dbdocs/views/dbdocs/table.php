@@ -19,13 +19,13 @@
 </thead>
 <tbody>
 <?php foreach ($columns as $column_name => $column_infos): ?>
-<tr id="<?php echo $column_name; ?>" class="<?php echo $column_name; ?>">
-<td><a href="#<?php echo $column_name; ?>"><?php echo isset($i) ? ++$i : $i = 1; ?></a></td>
+<tr id="_<?php echo $column_name; ?>" class="_column_<?php echo $column_name; ?>">
+<td><a href="#_column_<?php echo $column_name; ?>"><?php echo isset($i) ? ++$i : $i = 1; ?></a></td>
 <?php if(empty($column_infos['foreign_key']['table_name'])): ?>
 <td><?php echo $column_name; ?></td>
 <?php else: ?>
 <td>
-<a href="table_<?php echo $column_infos['foreign_key']['table_name']; ?>.html#<?php echo $column_infos['foreign_key']['column_name']; ?>"><?php echo $column_name; ?></a>
+<a href="table_<?php echo $column_infos['foreign_key']['table_name']; ?>.html#_column_<?php echo $column_infos['foreign_key']['column_name']; ?>"><?php echo $column_name; ?></a>
 <span class="_foreign_key" title="<?php echo $column_infos['foreign_key']['table_name'].'.'.$column_infos['foreign_key']['column_name']; ?>" ><i class="icon-question-sign"></i>
 </td>
 <?php endif; ?>
@@ -60,7 +60,7 @@
 <?php foreach ($indexes as $index_name => $index_infos): ?>
 <?php foreach ($index_infos['columns'] as $column_name): ?>
 <tr>
-<td><a class="<?php echo $column_name; ?>" href="#<?php echo $column_name; ?>"><?php echo $index_name; ?></a></td>
+<td><a class="_column_<?php echo $column_name; ?>" href="#_column_<?php echo $column_name; ?>"><?php echo $index_name; ?></a></td>
 <td><?php echo $column_name; ?></td>
 <td><span class="label label-info"><?php echo implode('</span> <span class="label label-info">', $index_infos['extras']); ?></span></td>
 </tr>

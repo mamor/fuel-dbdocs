@@ -20,7 +20,7 @@
 	<?php foreach ($table_infos['indexes'] as $index_name => $index_infos): ?>
 		<?php foreach ($index_infos['columns'] as $column_name): ?>
 <tr>
-<td><a href="table_<?php echo $table_name; ?>.html#<?php echo $column_name; ?>"><?php echo $index_name; ?></a></td>
+<td><a href="table_<?php echo $table_name; ?>.html#_column_<?php echo $column_name; ?>"><?php echo $index_name; ?></a></td>
 <td><a href="table_<?php echo $table_name; ?>.html"><?php echo $table_name; ?></a></td>
 
 <td><?php echo $column_name; ?></td>
