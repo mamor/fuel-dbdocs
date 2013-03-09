@@ -244,6 +244,8 @@ class Dbdocs
 		$html =
 			\ViewModel::forge('dbdocs/index')
 			->set('information', $this->get_information())
+			->set('__tables', $tables)
+			->set('__views', $views)
 			->render();
 
 		\File::create($dir, 'index.html', $html);

@@ -18,3 +18,7 @@
 </tbody>
 
 </table><!--/.table-->
+
+<?php echo $tables_count; ?> tables,
+<?php echo $indexes_count; ?> indexes,
+<?php echo $views_count; ?> views.
