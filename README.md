@@ -1,7 +1,8 @@
 # fuel-dbdocs [![Build Status](https://travis-ci.org/mp-php/fuel-dbdocs.png)](https://travis-ci.org/mp-php/fuel-dbdocs)
 
 fuel-dbdocs is generator for database documentation  
-You can generate database documentation from browser and command line
+You can generate database documentation from browser and command line  
+Example(GitLab Database): http://fueldbdocssample.madroom.net/index.html
 
 ---
 
