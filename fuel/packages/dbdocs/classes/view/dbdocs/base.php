@@ -20,6 +20,13 @@ abstract class View_Dbdocs_Base extends \Fuel\Core\ViewModel
 	protected $active = null;
 
 	/**
+	 * chosen data
+	 *
+	 * @var string
+	 */
+	protected static $chosen_json;
+
+	/**
 	 * Merge \Doctrine\DBAL\Schema\Index and \Doctrine\DBAL\Schema\ForeignKeyConstraint
 	 *
 	 * @param  $indexes array \Doctrine\DBAL\Schema\Index
@@ -91,8 +98,10 @@ abstract class View_Dbdocs_Base extends \Fuel\Core\ViewModel
 
 		$view->set('active', $this->active);
 
-		$chosen_json = $dd->get_chosen_json($dd->get_tables(), $dd->get_views());
-		$view->set('chosen_json', $chosen_json, false);
+		empty(static::$chosen_json) and
+			static::$chosen_json = $dd->get_chosen_json($dd->get_tables(), $dd->get_views());
+
+		$view->set('chosen_json', static::$chosen_json, false);
 
 		$view->set('content', parent::render(), false);
 
