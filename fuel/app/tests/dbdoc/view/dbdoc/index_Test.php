@@ -23,6 +23,8 @@ class Test_View_Dbdocs_Index extends Dbdocs_ViewModelTestCase
 		$html =
 			ViewModel::forge('dbdocs/index')
 			->set('information', static::$dd->get_information())
+			->set('__tables', static::$dd->get_tables())
+			->set('__views', static::$dd->get_views())
 			->render();
 
 		$dom = new DOMDocument();
