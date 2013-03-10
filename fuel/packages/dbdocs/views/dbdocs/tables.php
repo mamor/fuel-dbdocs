@@ -28,8 +28,8 @@
 
 <script>
 $(document).ready(function() {
-	$('input#_tables_search').quicksearch('table#_tables_table tbody tr');
+	$('#_tables_search').quicksearch('#_tables_table tbody tr');
 
-	$('input#_tables_search').focus();
+	$('#_tables_search').focus();
 });
 </script>

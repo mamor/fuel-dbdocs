@@ -39,8 +39,8 @@
 
 <script>
 $(document).ready(function() {
-	$('input#_indexes_search').quicksearch('table#_indexes_table tbody tr');
+	$('#_indexes_search').quicksearch('#_indexes_table tbody tr');
 
-	$('input#_indexes_search').focus();
+	$('#_indexes_search').focus();
 });
 </script>

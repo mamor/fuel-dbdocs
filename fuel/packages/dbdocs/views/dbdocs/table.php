@@ -103,9 +103,9 @@ $(document).ready(function() {
 		$.hashlink($(hash.replace(/#/, ".")).closest("tr").children("td"));
 	}
 
-	$('input#_columns_search').quicksearch('table#_columns_table tbody tr');
-	$('input#_indexes_search').quicksearch('table#_indexes_table tbody tr');
+	$('#_columns_search').quicksearch('#_columns_table tbody tr');
+	$('#_indexes_search').quicksearch('#_indexes_table tbody tr');
 
-	$('input#_columns_search').focus();
+	$('#_columns_search').focus();
 });
 </script>
