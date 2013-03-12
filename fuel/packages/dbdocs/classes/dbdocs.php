@@ -344,7 +344,7 @@ class Dbdocs
 
 				/* @var $column \Doctrine\DBAL\Schema\Column */
 				$ret['columns'][] = array(
-					'text' => $table->getName().'.'.$column->getName(),
+					'text' => $column->getName().' / '.$table->getName(),
 					'href' => 'table_'.$table->getName().".html?{$random}#_column_".$column->getName(),
 				);
 			}
@@ -360,7 +360,7 @@ class Dbdocs
 
 				/* @var $index \Doctrine\DBAL\Schema\Index */
 				$ret['indexes'][] = array(
-					'text' => $table->getName().'.'.$index->getName(),
+					'text' => $index->getName().' / '.$table->getName(),
 					'href' => 'table_'.$table->getName().".html?{$random}#_column_".$column_names[0],
 				);
 				
@@ -373,7 +373,7 @@ class Dbdocs
 			/* @var $view \Doctrine\DBAL\Schema\View */
 			$ret['views'][] = array(
 				'text' => $view->getName(),
-				'href' => 'view_'.$table->getName().'.html',
+				'href' => 'view_'.$view->getName().'.html',
 			);
 		}
 
