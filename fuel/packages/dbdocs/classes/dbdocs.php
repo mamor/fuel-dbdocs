@@ -52,6 +52,9 @@ class Dbdocs
 	{
 		require_once __DIR__.'/../vendor/autoload.php';
 
+		require_once PKGPATH.'dbdocs/classes/types/pointtype.php';
+		\Doctrine\DBAL\Types\Type::addType('point', 'Dbdocs\Types_PointType');
+
 		\Config::load('dbdocs', true);
 	}
 
@@ -63,6 +66,8 @@ class Dbdocs
 	public function __construct($config)
 	{
 		$this->conn = \Doctrine\DBAL\DriverManager::getConnection($config);
+
+		$this->conn->getDatabasePlatform()->registerDoctrineTypeMapping('point', 'point');
 
 		$this->sm = $this->conn->getSchemaManager();
 	}
