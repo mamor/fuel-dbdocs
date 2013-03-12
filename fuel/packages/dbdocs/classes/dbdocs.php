@@ -312,13 +312,13 @@ class Dbdocs
 	}
 
 	/**
-	 * Gets json for chosen
+	 * Gets array for chosen
 	 *
 	 * @param  $tables array \Doctrine\DBAL\Schema\Table
 	 * @param  $views array \Doctrine\DBAL\Schema\View
-	 * @return json
+	 * @return array
 	 */
-	public function get_chosen_json($tables, $views)
+	public function get_chosen_data($tables, $views)
 	{
 		$ret = array(
 			'tables' => array(),
@@ -344,7 +344,7 @@ class Dbdocs
 
 				/* @var $column \Doctrine\DBAL\Schema\Column */
 				$ret['columns'][] = array(
-					'text' => $column->getName().' / '.$table->getName(),
+					'text' => $table->getName().'.'.$column->getName(),
 					'href' => 'table_'.$table->getName().".html?{$random}#_column_".$column->getName(),
 				);
 			}
@@ -360,7 +360,7 @@ class Dbdocs
 
 				/* @var $index \Doctrine\DBAL\Schema\Index */
 				$ret['indexes'][] = array(
-					'text' => $index->getName().' / '.$table->getName(),
+					'text' => $table->getName().'.'.$index->getName(),
 					'href' => 'table_'.$table->getName().".html?{$random}#_column_".$column_names[0],
 				);
 				
@@ -377,7 +377,7 @@ class Dbdocs
 			);
 		}
 
-		return json_encode($ret);
+		return $ret;
 	}
 
 }

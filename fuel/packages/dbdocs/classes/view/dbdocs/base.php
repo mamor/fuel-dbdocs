@@ -24,7 +24,7 @@ abstract class View_Dbdocs_Base extends \Fuel\Core\ViewModel
 	 *
 	 * @var string
 	 */
-	protected static $chosen_json;
+	protected static $chosen_data;
 
 	/**
 	 * Merge \Doctrine\DBAL\Schema\Index and \Doctrine\DBAL\Schema\ForeignKeyConstraint
@@ -98,10 +98,10 @@ abstract class View_Dbdocs_Base extends \Fuel\Core\ViewModel
 
 		$view->set('active', $this->active);
 
-		empty(static::$chosen_json) and
-			static::$chosen_json = $dd->get_chosen_json($dd->get_tables(), $dd->get_views());
+		empty(static::$chosen_data) and
+			static::$chosen_data = $dd->get_chosen_data($dd->get_tables(), $dd->get_views());
 
-		$view->set('chosen_json', static::$chosen_json, false);
+		$view->set('chosen_data', static::$chosen_data, false);
 
 		$view->set('content', parent::render(), false);
 

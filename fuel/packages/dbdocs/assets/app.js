@@ -1,4 +1,15 @@
 $(document).ready(function () {
+	$("._extra").tooltip({
+		"html" : true,
+		"title" : "PK : Primary key<br />UI : Unique<br />I : Index<br />AI : Auto increment<br />FK : Foreign key<br />UN : Unsigned",
+		"placement" : "right"
+	});
+	$("._foreign_key").tooltip({
+		"placement" : "right"
+	});
+	$("#_global_search").chosen().change(function(e) {
+		window.location = $(this).val();
+	});
 	/**
 	 * Hotkeys
 	 */

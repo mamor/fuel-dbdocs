@@ -33,36 +33,6 @@ body { font-family: "<?php echo $webfont; ?>", sans-serif; }
 <script src="assets/keymaster/keymaster.min.js"></script>
 <script src="assets/chosen/chosen/chosen.jquery.min.js"></script>
 <script src="assets/quicksearch/jquery.quicksearch.js"></script>
-<script type="text/javascript">
-$(document).ready(function () {
-	$("._extra").tooltip({
-		"html" : true,
-		"title" : "PK : Primary key<br />UI : Unique<br />I : Index<br />AI : Auto increment<br />FK : Foreign key<br />UN : Unsigned",
-		"placement" : "right"
-	});
-	$("._foreign_key").tooltip({
-		"placement" : "right"
-	});
-
-	var chosen_json = <?php echo $chosen_json; ?>;
-
-	$.each(chosen_json.tables, function(index, array) {
-		$("#_global_search_tables").append(new Option(array["text"], array["href"]));
-	});
-	$.each(chosen_json.columns, function(index, array) {
-		$("#_global_search_columns").append(new Option(array["text"], array["href"]));
-	});
-	$.each(chosen_json.indexes, function(index, array) {
-		$("#_global_search_indexes").append(new Option(array["text"], array["href"]));
-	});
-	$.each(chosen_json.views, function(index, array) {
-		$("#_global_search_views").append(new Option(array["text"], array["href"]));
-	});
-	$("#_global_search").chosen().change(function(e) {
-		window.location = $(this).val();
-	});
-});
-</script>
 <script src="assets/app.js"></script>
 
 </head>
@@ -81,10 +51,26 @@ $(document).ready(function () {
 <form class="navbar-form pull-left" style="margin-top:8px;">
 <select id="_global_search" data-placeholder="Search" style="width:500px;" />
 <option value=""></option>
-<optgroup id="_global_search_tables" label="Tables"></optgroup>
-<optgroup id="_global_search_columns" label="Columns"></optgroup>
-<optgroup id="_global_search_indexes" label="Indexes"></optgroup>
-<optgroup id="_global_search_views" label="Views"></optgroup>
+<optgroup id="_global_search_tables" label="Tables">
+<?php foreach ($chosen_data['tables'] as $data): ?>
+<option value="<?php echo $data['href']; ?>"><?php echo $data['text']; ?></option>
+<?php endforeach; ?>
+</optgroup>
+<optgroup id="_global_search_columns" label="Columns">
+<?php foreach ($chosen_data['columns'] as $data): ?>
+<option value="<?php echo $data['href']; ?>"><?php echo $data['text']; ?></option>
+<?php endforeach; ?>
+</optgroup>
+<optgroup id="_global_search_indexes" label="Indexes">
+<?php foreach ($chosen_data['indexes'] as $data): ?>
+<option value="<?php echo $data['href']; ?>"><?php echo $data['text']; ?></option>
+<?php endforeach; ?>
+</optgroup>
+<optgroup id="_global_search_views" label="Views">
+<?php foreach ($chosen_data['views'] as $data): ?>
+<option value="<?php echo $data['href']; ?>"><?php echo $data['text']; ?></option>
+<?php endforeach; ?>
+</optgroup>
 </select>
 </form>
 
