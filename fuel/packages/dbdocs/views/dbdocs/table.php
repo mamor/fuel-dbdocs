@@ -19,7 +19,7 @@
 </thead>
 <tbody>
 <?php foreach ($columns as $column_name => $column_infos): ?>
-<tr id="_<?php echo $column_name; ?>" class="_column_<?php echo $column_name; ?>">
+<tr class="_column_<?php echo $column_name; ?>">
 <td><a href="#_column_<?php echo $column_name; ?>"><?php echo isset($i) ? ++$i : $i = 1; ?></a></td>
 <?php if(empty($column_infos['foreign_key']['table_name'])): ?>
 <td><?php echo $column_name; ?></td>
