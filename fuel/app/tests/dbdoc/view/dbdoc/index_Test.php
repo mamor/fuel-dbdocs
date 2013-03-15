@@ -23,6 +23,7 @@ class Test_View_Dbdocs_Index extends Dbdocs_ViewModelTestCase
 		$html =
 			ViewModel::forge('dbdocs/index')
 			->set('information', static::$dd->get_information())
+			->set('description', static::$dd->config['description'])
 			->set('__tables', static::$dd->get_tables())
 			->set('__views', static::$dd->get_views())
 			->render();
@@ -34,19 +35,25 @@ class Test_View_Dbdocs_Index extends Dbdocs_ViewModelTestCase
 			->getElementsByTagName('tbody')->item(0);
 
 		/**
-		 * check platform name
+		 * check platform
 		 */
 		$output = $tbody->getElementsByTagName('td')->item(0)->nodeValue;
 		$expected = static::$dd->conn->getDatabasePlatform()->getName();
 		$this->assertEquals($expected, $output);
 
 		/**
-		 * check database name
+		 * check database
 		 */
 		$output = $tbody->getElementsByTagName('td')->item(1)->nodeValue;
 		$expected = static::$dd->conn->getDatabase();
 		$this->assertEquals($expected, $output);
 
+		/**
+		 * check description
+		 */
+		$output = $tbody->getElementsByTagName('td')->item(2)->nodeValue;
+		$expected = static::$dd->config['description'];
+		$this->assertEquals($expected, $output);
 	}
 
 }

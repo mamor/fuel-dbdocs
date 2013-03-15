@@ -49,6 +49,7 @@ Create and Edit fuel/app/config/development/dbdocs.php
 				'password' => 'root',
 				'host'     => 'localhost',
 				'driver'   => 'pdo_mysql',
+				'description' => 'xxx',
 			),
 		),
 	);

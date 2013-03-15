@@ -37,6 +37,7 @@ class Dbdocs
 		'password' => '',
 		'charset'  => '',
 		'driver'   => 'pdo_mysql',
+		'description' => '',
 	);
 
 	/**
@@ -51,6 +52,7 @@ class Dbdocs
 		'password' => '',
 		'charset'  => '',
 		'driver'   => 'pdo_pgsql',
+		'description' => '',
 	);
 
 	/**
@@ -62,6 +64,7 @@ class Dbdocs
 		'path'     => '',
 		'charset'  => '',
 		'driver'   => 'pdo_sqlite',
+		'description' => '',
 	);
 
 	/**
@@ -107,10 +110,12 @@ MySQL and PostgreSQL:
   --user=<user>
   --password=<password>
   --charset=<charset>
+  --description=<description>
 
 SQLite:
   --path=<path>
   --charset=<charset>
+  --description=<description>
 
 HELP;
 		\Cli::write($output);
@@ -264,9 +269,8 @@ HELP;
 					{
 						$v = trim(\Cli::prompt($k));
 					}
-					while ($k != 'password' and strlen($v) === 0);
+					while ( ! in_array($k, array('password', 'description')) and strlen($v) === 0);
 				}
-
 			}
 		}
 		else

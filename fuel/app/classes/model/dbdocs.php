@@ -32,6 +32,11 @@ class Model_Dbdocs extends \Orm\Model
 					'valid_string' => array(array('alpha', 'numeric', 'dashes'))),
 				'form'       => array('type' => 'text', 'placeholder' => 'Document name'),
 			),
+			'description' => array(
+				'label'      => false,
+				'validation' => array('trim', 'max_length' => array(255)),
+				'form'       => array('type' => 'text', 'placeholder' => 'Description'),
+			),
 			/**
 			 * for doctrine values
 			 */
@@ -81,6 +86,11 @@ class Model_Dbdocs extends \Orm\Model
 					'valid_string' => array(array('alpha', 'numeric', 'dashes'))),
 				'form'       => array('type' => 'text', 'placeholder' => 'Document name'),
 			),
+			'description' => array(
+				'label'      => false,
+				'validation' => array('trim', 'max_length' => array(255)),
+				'form'       => array('type' => 'text', 'placeholder' => 'Description'),
+			),
 			/**
 			 * for doctrine values
 			 */
@@ -129,6 +139,11 @@ class Model_Dbdocs extends \Orm\Model
 				'validation' => array('trim', 'required', 'max_length' => array(255),
 					'valid_string' => array(array('alpha', 'numeric', 'dashes'))),
 				'form'       => array('type' => 'text', 'placeholder' => 'Document name'),
+			),
+			'description' => array(
+				'label'      => false,
+				'validation' => array('trim', 'max_length' => array(255)),
+				'form'       => array('type' => 'text', 'placeholder' => 'Description'),
 			),
 			/**
 			 * for doctrine values

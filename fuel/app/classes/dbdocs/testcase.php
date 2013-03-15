@@ -28,6 +28,7 @@ abstract class Dbdocs_TestCase extends TestCase
 			'password' => '',
 			'host'     => 'localhost',
 			'driver'   => 'pdo_mysql',
+			'description' => 'xxx',
 		),
 		'pgsql' => array(
 			'dbname'   => 'fuel_dbdocs_tests',
@@ -35,10 +36,12 @@ abstract class Dbdocs_TestCase extends TestCase
 			'password' => '',
 			'host'     => 'localhost',
 			'driver'   => 'pdo_pgsql',
+			'description' => 'yyy',
 		),
 		'sqlite' => array(
 			'path'     => './sqlite_fuel_dbdocs_tests',
 			'driver'   => 'pdo_sqlite',
+			'description' => 'zzz',
 		),
 	);
 

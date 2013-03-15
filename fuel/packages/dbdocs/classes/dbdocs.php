@@ -46,6 +46,13 @@ class Dbdocs
 	public $sm;
 
 	/**
+	 * Database connection setting
+	 * 
+	 * @var array
+	 */
+	public $config = array();
+
+	/**
 	 * Class initialization callback
 	 */
 	public static function _init()
@@ -65,7 +72,9 @@ class Dbdocs
 	 */
 	public function __construct($config)
 	{
-		$this->conn = \Doctrine\DBAL\DriverManager::getConnection($config);
+		$this->config = $config;
+
+		$this->conn = \Doctrine\DBAL\DriverManager::getConnection($this->config);
 
 		$this->conn->getDatabasePlatform()->registerDoctrineTypeMapping('point', 'point');
 
@@ -249,6 +258,7 @@ class Dbdocs
 		$html =
 			\ViewModel::forge('dbdocs/index')
 			->set('information', $this->get_information())
+			->set('description', $this->config['description'])
 			->set('__tables', $tables)
 			->set('__views', $views)
 			->render();
