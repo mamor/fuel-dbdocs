@@ -1,4 +1,7 @@
 <?php
+
+namespace Dbdocs;
+
 /**
  * Dbdocs_TestCase class
  * @abstract
@@ -7,7 +10,7 @@
  * @copyright 2013 Mamoru Otsuka
  * @license   MIT License http://www.opensource.org/licenses/mit-license.php
  */
-abstract class Dbdocs_TestCase extends TestCase
+abstract class Dbdocs_TestCase extends \TestCase
 {
 	/**
 	 * Instance of Dbdocs\Dbdocs
@@ -23,7 +26,7 @@ abstract class Dbdocs_TestCase extends TestCase
 	 */
 	protected static $travis_dbs = array(
 		'mysql' => array(
-			'dbname'   => 'fuel_dbdocs_tests',
+			'dbname'   => 'fuel_packages_dbdocs_tests',
 			'user'     => 'root',
 			'password' => '',
 			'host'     => 'localhost',
@@ -31,7 +34,7 @@ abstract class Dbdocs_TestCase extends TestCase
 			'description' => 'xxx',
 		),
 		'pgsql' => array(
-			'dbname'   => 'fuel_dbdocs_tests',
+			'dbname'   => 'fuel_packages_dbdocs_tests',
 			'user'     => 'postgres',
 			'password' => '',
 			'host'     => 'localhost',
@@ -39,7 +42,7 @@ abstract class Dbdocs_TestCase extends TestCase
 			'description' => 'yyy',
 		),
 		'sqlite' => array(
-			'path'     => './sqlite_fuel_dbdocs_tests',
+			'path'     => './fuel_packages_dbdocs_tests.sqlite',
 			'driver'   => 'pdo_sqlite',
 			'description' => 'zzz',
 		),
@@ -174,8 +177,8 @@ abstract class Dbdocs_TestCase extends TestCase
 		}
 		else
 		{
-			static::$config = include APPPATH.'config'.DS.Fuel::DEVELOPMENT.DS.'dbdocs.php';
-			static::$config = Arr::get(static::$config, 'test_config.db');
+			static::$config = include APPPATH.'config'.DS.\Fuel::DEVELOPMENT.DS.'dbdocs.php';
+			static::$config = \Arr::get(static::$config, 'test_config.db');
 		}
 
 		/**

@@ -1,4 +1,7 @@
 <?php
+
+namespace Dbdocs;
+
 /**
  * Test_Dbdocs class
  *
@@ -10,7 +13,7 @@
 /**
  * Dbdocs class tests
  *
- * @group App
+ * @group Dbdocs
  */
 class Test_Dbdocs extends Dbdocs_TestCase
 {
@@ -20,7 +23,7 @@ class Test_Dbdocs extends Dbdocs_TestCase
 	 */
 	public function test_forge()
     {
-		static::$dd = Dbdocs::forge(Str::random('unique'), static::$config);
+		static::$dd = Dbdocs::forge(\Str::random('unique'), static::$config);
 		$this->assertTrue(static::$dd instanceof Dbdocs);
 	}
 
@@ -29,8 +32,8 @@ class Test_Dbdocs extends Dbdocs_TestCase
 	 */
 	public function test_get_tables()
     {
-		Config::set('dbdocs.ignore_table_names', array('test2'));
-		Config::set('dbdocs.ignore_table_name_regex', '/^test3$/');
+		\Config::set('dbdocs.ignore_table_names', array('test2'));
+		\Config::set('dbdocs.ignore_table_name_regex', '/^test3$/');
 
 		$tables = static::$dd->get_tables();
 

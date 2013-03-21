@@ -10,4 +10,7 @@ Autoloader::add_classes(array(
 	'Dbdocs\\View_Dbdocs_tables' => __DIR__.'/classes/view/dbdocs/tables.php',
 	'Dbdocs\\View_Dbdocs_view' => __DIR__.'/classes/view/dbdocs/view.php',
 	'Dbdocs\\View_Dbdocs_views' => __DIR__.'/classes/view/dbdocs/views.php',
+	'Dbdocs\\View_Dbdocs_views' => __DIR__.'/classes/view/dbdocs/views.php',
+	'Dbdocs\\Dbdocs_TestCase' => __DIR__.'/classes/testcase.php',
+	'Dbdocs\\Dbdocs_ViewModelTestCase' => __DIR__.'/classes/viewmodeltestcase.php',
 ));

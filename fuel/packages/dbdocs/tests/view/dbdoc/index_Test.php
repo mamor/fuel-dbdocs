@@ -1,4 +1,7 @@
 <?php
+
+namespace Dbdocs;
+
 /**
  * Test_View_Dbdocs_Index class
  *
@@ -10,7 +13,7 @@
 /**
  * View_Dbdocs_Index class tests
  *
- * @group App
+ * @group Dbdocs
  */
 class Test_View_Dbdocs_Index extends Dbdocs_ViewModelTestCase
 {
@@ -21,14 +24,14 @@ class Test_View_Dbdocs_Index extends Dbdocs_ViewModelTestCase
 	public function test_view()
     {
 		$html =
-			ViewModel::forge('dbdocs/index')
+			\ViewModel::forge('dbdocs/index')
 			->set('information', static::$dd->get_information())
 			->set('description', static::$dd->config['description'])
 			->set('__tables', static::$dd->get_tables())
 			->set('__views', static::$dd->get_views())
 			->render();
 
-		$dom = new DOMDocument();
+		$dom = new \DOMDocument();
 		$dom->loadHTML($html);
 
 		$tbody = $dom->getElementsByTagName('table')->item(0)

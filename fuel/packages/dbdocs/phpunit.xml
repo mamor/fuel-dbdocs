@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit colors="true" stopOnFailure="false" bootstrap="../../core/bootstrap_phpunit.php">
+	<php>
+		<server name="doc_root" value="../../"/>
+		<server name="app_path" value="fuel/app"/>
+		<server name="core_path" value="fuel/core"/>
+		<server name="package_path" value="fuel/packages"/>
+		<server name="FUEL_ENV" value="test"/>
+	</php>
+	<testsuites>
+		<testsuite>
+			<directory suffix=".php">./tests</directory>
+		</testsuite>
+	</testsuites>
+	<filter>
+		<whitelist>
+			<directory suffix=".php">./classes</directory>
+			<directory suffix=".php">./tasks</directory>
+			<exclude>
+				<file>./classes/testcase.php</file>
+				<file>./classes/viewmodeltestcase.php</file>
+			</exclude>
+		</whitelist>
+	</filter>
+</phpunit>

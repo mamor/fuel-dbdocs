@@ -1,0 +1,35 @@
+branches:
+  only:
+    - 'master'
+
+language: php
+
+php:
+  - 5.3
+  - 5.4
+  - 5.5
+
+env:
+  global:
+    - PACKAGE=dbdocs
+    - GROUP=Dbdocs
+  matrix:
+    - TRAVIS_DB=mysql
+    - TRAVIS_DB=pgsql
+    - TRAVIS_DB=sqlite
+
+before_script:
+  - git clone --recursive git://github.com/fuel/fuel.git $HOME/fuelphp >& /dev/null
+  - cp -r `pwd` $HOME/fuelphp/fuel/packages/$PACKAGE
+  - cp -r $HOME/fuelphp/fuel/packages/$PACKAGE/.travis/config/config.php $HOME/fuelphp/fuel/app/config/config.php
+
+  - cd $HOME/fuelphp/fuel/packages/$PACKAGE/
+  - curl -s http://getcomposer.org/installer | php
+  - php composer.phar install
+  - cd ../../../
+
+  - sh -c "if [ '$TRAVIS_DB' = 'mysql' ]; then mysql -e 'create database fuel_packages_dbdocs_tests;'; fi"
+  - sh -c "if [ '$TRAVIS_DB' = 'pgsql' ]; then psql -c 'create database fuel_packages_dbdocs_tests;' -U postgres; fi"
+
+script:
+  - TRAVIS_DB=$TRAVIS_DB phpunit --group=$GROUP --coverage-text -c fuel/packages/$PACKAGE/phpunit.xml

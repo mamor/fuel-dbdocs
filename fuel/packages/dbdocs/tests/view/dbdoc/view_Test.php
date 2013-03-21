@@ -1,4 +1,7 @@
 <?php
+
+namespace Dbdocs;
+
 /**
  * Test_View_Dbdocs_View class
  *
@@ -10,7 +13,7 @@
 /**
  * View_Dbdocs_View class tests
  *
- * @group App
+ * @group Dbdocs
  */
 class Test_View_Dbdocs_View extends Dbdocs_ViewModelTestCase
 {
@@ -26,11 +29,11 @@ class Test_View_Dbdocs_View extends Dbdocs_ViewModelTestCase
 		{
 			/* @var $view \Doctrine\DBAL\Schema\View */
 			$html =
-				ViewModel::forge('dbdocs/view')
+				\ViewModel::forge('dbdocs/view')
 				->set('__view', $view)
 				->render();
 
-			$dom = new DOMDocument();
+			$dom = new \DOMDocument();
 			$dom->loadHTML($html);
 
 			/**

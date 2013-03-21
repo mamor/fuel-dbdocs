@@ -1,4 +1,7 @@
 <?php
+
+namespace Dbdocs;
+
 /**
  * Test_View_Dbdocs_Table class
  *
@@ -10,7 +13,7 @@
 /**
  * View_Dbdocs_Table class tests
  *
- * @group App
+ * @group Dbdocs
  */
 class Test_View_Dbdocs_Table extends Dbdocs_ViewModelTestCase
 {
@@ -26,11 +29,11 @@ class Test_View_Dbdocs_Table extends Dbdocs_ViewModelTestCase
 		{
 			/* @var $table \Doctrine\DBAL\Schema\Table */
 			$html =
-				ViewModel::forge('dbdocs/table')
+				\ViewModel::forge('dbdocs/table')
 				->set('__table', $table)
 				->render();
 
-			$dom = new DOMDocument();
+			$dom = new \DOMDocument();
 			$dom->loadHTML($html);
 
 			/**
@@ -132,8 +135,8 @@ class Test_View_Dbdocs_Table extends Dbdocs_ViewModelTestCase
 				}
 			}
 
-			Log::debug('expected : '.print_r($expected, true));
-			Log::debug('output : '.print_r($output, true));
+			\Log::debug('expected : '.print_r($expected, true));
+			\Log::debug('output : '.print_r($output, true));
 
 			foreach ($expected as $k => $v)
 			{
@@ -155,11 +158,11 @@ class Test_View_Dbdocs_Table extends Dbdocs_ViewModelTestCase
 		{
 			/* @var $table \Doctrine\DBAL\Schema\Table */
 			$html =
-				ViewModel::forge('dbdocs/table')
+				\ViewModel::forge('dbdocs/table')
 				->set('__table', $table)
 				->render();
 
-			$dom = new DOMDocument();
+			$dom = new \DOMDocument();
 			$dom->loadHTML($html);
 
 			/**
@@ -239,8 +242,8 @@ class Test_View_Dbdocs_Table extends Dbdocs_ViewModelTestCase
 				}
 			}
 
-			Log::debug('expected : '.print_r($expected, true));
-			Log::debug('output : '.print_r($output, true));
+			\Log::debug('expected : '.print_r($expected, true));
+			\Log::debug('output : '.print_r($output, true));
 
 			foreach ($expected as $k => $v)
 			{

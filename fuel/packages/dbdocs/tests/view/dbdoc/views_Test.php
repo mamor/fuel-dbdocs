@@ -1,4 +1,7 @@
 <?php
+
+namespace Dbdocs;
+
 /**
  * Test_View_Dbdocs_Views class
  *
@@ -10,7 +13,7 @@
 /**
  * View_Dbdocs_Views class tests
  *
- * @group App
+ * @group Dbdocs
  */
 class Test_View_Dbdocs_Views extends Dbdocs_ViewModelTestCase
 {
@@ -23,11 +26,11 @@ class Test_View_Dbdocs_Views extends Dbdocs_ViewModelTestCase
 		$views = static::$dd->get_views();
 
 		$html =
-			ViewModel::forge('dbdocs/views')
+			\ViewModel::forge('dbdocs/views')
 			->set('__views', $views)
 			->render();
 
-		$dom = new DOMDocument();
+		$dom = new \DOMDocument();
 		$dom->loadHTML($html);
 
 		$tbody = $dom->getElementsByTagName('table')->item(0)

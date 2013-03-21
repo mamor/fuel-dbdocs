@@ -67,7 +67,9 @@ class Dbdocs
 		require_once __DIR__.'/../vendor/autoload.php';
 
 		require_once PKGPATH.'dbdocs/classes/types/pointtype.php';
-		\Doctrine\DBAL\Types\Type::addType('point', 'Dbdocs\Types_PointType');
+
+		! \Doctrine\DBAL\Types\Type::hasType('point') and
+			\Doctrine\DBAL\Types\Type::addType('point', 'Dbdocs\Types_PointType');
 
 		\Config::load('dbdocs', true);
 	}

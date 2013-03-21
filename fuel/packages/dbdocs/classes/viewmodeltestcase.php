@@ -1,4 +1,7 @@
 <?php
+
+namespace Dbdocs;
+
 /**
  * Dbdocs_ViewModelTestCase class
  * @abstract

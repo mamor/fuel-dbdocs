@@ -44,7 +44,7 @@ Create and Edit fuel/app/config/development/dbdocs.php
 	return array(
 		'test_config' => array(
 			'db' => array(
-				'dbname'   => 'fuel_dbdocs_tests',
+				'dbname'   => 'fuel_packages_dbdocs_tests',
 				'user'     => 'root',
 				'password' => 'root',
 				'host'     => 'localhost',
