@@ -26,7 +26,7 @@
 <?php else: ?>
 <td>
 <a href="table_<?php echo $column_infos['foreign_key']['table_name']; ?>.html#_column_<?php echo $column_infos['foreign_key']['column_name']; ?>"><?php echo $column_name; ?></a>
-<span class="_foreign_key" title="<?php echo $column_infos['foreign_key']['table_name'].'.'.$column_infos['foreign_key']['column_name']; ?>" ><i class="icon-question-sign"></i>
+<span class="_foreign_key" title="<?php echo $column_infos['foreign_key']['table_name'].'.'.$column_infos['foreign_key']['column_name']; ?>"><i class="icon-question-sign"></i></span>
 </td>
 <?php endif; ?>
 <td><?php echo $column_infos['type']; ?></td>

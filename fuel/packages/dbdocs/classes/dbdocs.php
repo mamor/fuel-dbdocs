@@ -53,6 +53,13 @@ class Dbdocs
 	public $config = array();
 
 	/**
+	 * Relations of FuelPHP Models
+	 * 
+	 * @var array
+	 */
+	public $fuel_relations = array();
+
+	/**
 	 * Class initialization callback
 	 */
 	public static function _init()
@@ -252,6 +259,11 @@ class Dbdocs
 		$tables = $this->get_tables();
 		$views = $this->get_views();
 
+		foreach ($tables as $table)
+		{
+			$this->set_fuel_relations($table);
+		}
+
 		/**
 		 * generate index.html
 		 */
@@ -393,6 +405,97 @@ class Dbdocs
 		}
 
 		return $ret;
+	}
+
+	/*******************************************************
+	 * Private methods
+	 ******************************************************/
+	/**
+	 * Sets relations of FuelPHP Models
+	 *
+	 * @param  $table array \Doctrine\DBAL\Schema\Table
+	 */
+	private function set_fuel_relations(\Doctrine\DBAL\Schema\Table $table)
+	{
+		$table_name = $table->getName();
+
+		$fuel_model_name = $this->get_fuel_model_name($table_name);
+		if ($fuel_model_name === false)
+		{
+			return;
+		}
+
+		foreach ($fuel_model_name::relations() as $relation)
+		{
+			switch (\Inflector::denamespace(get_class($relation))) {
+				case 'BelongsTo':
+					$model_from = $relation->model_from;
+					$model_to = $relation->model_to;
+
+					$this->fuel_relations[$table_name]['belongs_to'][] = array(
+						'key_from' => $relation->key_from[0],
+						'table_to' => $model_to::table(),
+						'key_to' => $relation->key_to[0],
+					);
+				break;
+
+				case 'HasOne':
+					$model_from = $relation->model_from;
+					$model_to = $relation->model_to;
+
+					$this->fuel_relations[$table_name]['has_one'][] = array(
+						'key_from' => $relation->key_from[0],
+						'table_to' => $model_to::table(),
+						'key_to' => $relation->key_to[0],
+					);
+				break;
+
+				case 'HasMany':
+					$model_from = $relation->model_from;
+					$model_to = $relation->model_to;
+
+					$this->fuel_relations[$table_name]['has_many'][] = array(
+						'is_many_many' => false,
+						'key_from' => $relation->key_from[0],
+						'table_to' => $model_to::table(),
+						'key_to' => $relation->key_to[0],
+					);
+				break;
+
+				case 'ManyMany':
+					$this->fuel_relations[$table_name]['has_many'][] = array(
+						'is_many_many' => true,
+						'key_from' => $relation->key_from[0],
+						'table_to' => $relation->table_through,
+						'key_to' => $relation->key_through_from[0],
+					);
+				break;
+
+				default:
+				break;
+			}
+		}
+	}
+	/**
+	 * Gets FuelPHP model's name
+	 *
+	 * @param  $table_name string
+	 * @return string
+	 */
+	private function get_fuel_model_name($table_name)
+	{
+		$table_name = ucwords(strtolower($table_name));
+
+		$fuel_model_name = 'Model_'.$table_name;
+		if (class_exists($fuel_model_name)) return $fuel_model_name;
+
+		$fuel_model_name = 'Model_'.\Inflector::singularize($table_name);
+		if (class_exists($fuel_model_name)) return $fuel_model_name;
+
+		$fuel_model_name = 'Model_'.\Inflector::singularize(\Inflector::camelize($table_name));
+		if (class_exists($fuel_model_name)) return $fuel_model_name;
+
+		return false;
 	}
 
 }
