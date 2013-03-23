@@ -1,3 +1,5 @@
+# fuel-dbdocs
+
 * fuel-dbdocs is generator for database documentation
 * You can generate database documentation from command line and browser
 * Example(GitLab Database) http://fueldbdocssample.madroom.net/index.html
