@@ -1,0 +1,3 @@
+[submodule "fuel/packages/dbdocs"]
+	path = fuel/packages/dbdocs
+	url = git://github.com/mp-php/fuel-packages-dbdocs.git
