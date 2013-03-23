@@ -1,9 +1,9 @@
-# fuel-dbdocs [![Build Status](https://travis-ci.org/mp-php/fuel-dbdocs.png)](https://travis-ci.org/mp-php/fuel-dbdocs)
-
 * fuel-dbdocs is generator for database documentation
 * You can generate database documentation from command line and browser
 * Example(GitLab Database) http://fueldbdocssample.madroom.net/index.html
 * Powered by FuelPHP http://fuelphp.com/
+
+If you need analysis of the FuelPHP's models relations, please use https://github.com/mp-php/fuel-packages-dbdocs
 
 ---
 
@@ -17,7 +17,7 @@
 
 ### Getting code
 
-Download zip or git clone
+	$ git clone --recursive git://github.com/mp-php/fuel-dbdocs.git fuel-dbdocs
 
 ### Install vendors
 
@@ -35,7 +35,7 @@ Download zip or git clone
 
 Access public/index.php
 
-## Test
+## Test in fuel/packages/dbdocs
 
 Create and Edit fuel/app/config/development/dbdocs.php
 
@@ -44,7 +44,7 @@ Create and Edit fuel/app/config/development/dbdocs.php
 	return array(
 		'test_config' => array(
 			'db' => array(
-				'dbname'   => 'fuel_packages_dbdocs_tests',
+	            'dbname'   => '[test_dbname]', // You must also create database.
 				'user'     => 'root',
 				'password' => 'root',
 				'host'     => 'localhost',
@@ -53,6 +53,10 @@ Create and Edit fuel/app/config/development/dbdocs.php
 			),
 		),
 	);
+
+Run
+
+	$ phpunit --group=Dbdocs --coverage-text -c fuel/packages/dbdocs/phpunit.xml
 
 ## License
 
