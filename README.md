@@ -24,7 +24,6 @@ If you need analysis of the FuelPHP's models relations, please use https://githu
 ### Install vendors
 
 	$ cd fuel/packages/dbdocs
-	$ curl -s http://getcomposer.org/installer | php
 	$ php composer.phar install
 
 ## Usage
