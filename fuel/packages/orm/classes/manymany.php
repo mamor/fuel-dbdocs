@@ -1,9 +1,11 @@
 <?php
 /**
+ * Fuel
+ *
  * Fuel is a fast, lightweight, community driven PHP5 framework.
  *
  * @package    Fuel
- * @version    1.5
+ * @version    1.6
  * @author     Fuel Development Team
  * @license    MIT License
  * @copyright  2010 - 2013 Fuel Development Team
@@ -151,11 +153,14 @@ class ManyMany extends Relation
 	{
 		$alias_to = 't'.$alias_to_nr;
 
+		$alias_through = array($this->table_through, $alias_to.'_through');
+		$alias_to_table = array(call_user_func(array($this->model_to, 'table')), $alias_to);
+
 		$models = array(
 			$rel_name.'_through' => array(
 				'model'        => null,
 				'connection'   => call_user_func(array($this->model_to, 'connection')),
-				'table'        => array($this->table_through, $alias_to.'_through'),
+				'table'        => $alias_through,
 				'primary_key'  => null,
 				'join_type'    => \Arr::get($conditions, 'join_type') ?: \Arr::get($this->conditions, 'join_type', 'left'),
 				'join_on'      => array(),
@@ -166,7 +171,7 @@ class ManyMany extends Relation
 			$rel_name => array(
 				'model'        => $this->model_to,
 				'connection'   => call_user_func(array($this->model_to, 'connection')),
-				'table'        => array(call_user_func(array($this->model_to, 'table')), $alias_to),
+				'table'        => $alias_to_table,
 				'primary_key'  => call_user_func(array($this->model_to, 'primary_key')),
 				'join_type'    => \Arr::get($conditions, 'join_type') ?: \Arr::get($this->conditions, 'join_type', 'left'),
 				'join_on'      => array(),
@@ -174,7 +179,6 @@ class ManyMany extends Relation
 				'rel_name'     => strpos($rel_name, '.') ? substr($rel_name, strrpos($rel_name, '.') + 1) : $rel_name,
 				'relation'     => $this,
 				'where'        => \Arr::get($conditions, 'where', array()),
-				'order_by'     => \Arr::get($conditions, 'order_by') ?: \Arr::get($this->conditions, 'order_by', array()),
 			)
 		);
 
@@ -191,16 +195,34 @@ class ManyMany extends Relation
 			$models[$rel_name]['join_on'][] = array($alias_to.'_through.'.$key, '=', $alias_to.'.'.current($this->key_to));
 			next($this->key_to);
 		}
-		foreach (\Arr::get($this->conditions, 'where', array()) as $key => $condition)
-		{
-			! is_array($condition) and $condition = array($key, '=', $condition);
-			if ( ! $condition[0] instanceof \Fuel\Core\Database_Expression and strpos($condition[0], '.') === false)
-			{
-				$condition[0] = $alias_to.'.'.$condition[0];
-			}
-			is_string($condition[2]) and $condition[2] = \Db::quote($condition[2], $models[$rel_name]['connection']);
 
-			$models[$rel_name]['join_on'][] = $condition;
+		foreach (array(\Arr::get($this->conditions, 'where', array()), \Arr::get($conditions, 'join_on', array())) as $c)
+		{
+			foreach ($c as $key => $condition)
+			{
+				! is_array($condition) and $condition = array($key, '=', $condition);
+				if ( ! $condition[0] instanceof \Fuel\Core\Database_Expression and strpos($condition[0], '.') === false)
+				{
+					$condition[0] = $alias_to.'.'.$condition[0];
+				}
+				is_string($condition[2]) and $condition[2] = \Db::quote($condition[2], $models[$rel_name]['connection']);
+
+				$models[$rel_name]['join_on'][] = $condition;
+			}
+		}
+
+		$order_by = \Arr::get($conditions, 'order_by') ?: \Arr::get($this->conditions, 'order_by', array());
+		foreach ($order_by as $key => $direction)
+		{
+			if ( ! $key instanceof \Fuel\Core\Database_Expression and strpos($key, '.') === false)
+			{
+				$key = $alias_to.'.'.$key;
+			}
+			else
+			{
+				$key = str_replace(array($alias_through[0],$alias_to_table[0]), array($alias_through[1],$alias_to_table[1]), $key);
+			}
+			$models[$rel_name]['order_by'][$key] = $direction;
 		}
 
 		return $models;
@@ -329,7 +351,7 @@ class ManyMany extends Relation
 		$this->delete_related($model_from);
 
 		$cascade = is_null($cascade) ? $this->cascade_delete : (bool) $cascade;
-		if ($cascade and ! empty($model_to))
+		if ($cascade and ! empty($models_to))
 		{
 			foreach ($models_to as $m)
 			{

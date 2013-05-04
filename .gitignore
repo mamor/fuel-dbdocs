@@ -1,9 +1,11 @@
 # OS X dust
 .DS_Store
+composer.lock
 fuel/app/cache
+fuel/app/config/crypt.php
 fuel/app/config/development
 fuel/app/logs
 fuel/app/tmp
-crypt.php
+fuel/vendor
 
 public/dbdocs

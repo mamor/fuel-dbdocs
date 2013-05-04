@@ -1,9 +1,11 @@
 <?php
 /**
+ * Fuel
+ *
  * Fuel is a fast, lightweight, community driven PHP5 framework.
  *
  * @package    Fuel
- * @version    1.5
+ * @version    1.6
  * @author     Fuel Development Team
  * @license    MIT License
  * @copyright  2010 - 2013 Fuel Development Team
@@ -30,7 +32,7 @@ abstract class Auth_Login_Driver extends \Auth_Driver
 		// default driver id to driver name when not given
 		! array_key_exists('id', $config) && $config['id'] = $config['driver'];
 
-		$class = \Inflector::get_namespace($config['driver']).'Auth_Login_'.ucfirst(\Inflector::denamespace($config['driver']));
+		$class = \Inflector::get_namespace($config['driver']).'Auth_Login_'.\Str::ucwords(\Inflector::denamespace($config['driver']));
 		$driver = new $class($config);
 		static::$_instances[$driver->get_id()] = $driver;
 		is_null(static::$_instance) and static::$_instance = $driver;
@@ -42,7 +44,7 @@ abstract class Auth_Login_Driver extends \Auth_Driver
 				$custom = is_int($d)
 					? array('driver' => $custom)
 					: array_merge($custom, array('driver' => $d));
-				$class = 'Auth_'.ucfirst($type).'_Driver';
+				$class = 'Auth_'.\Str::ucwords($type).'_Driver';
 				$class::forge($custom);
 			}
 		}
@@ -172,7 +174,7 @@ abstract class Auth_Login_Driver extends \Auth_Driver
 	 */
 	public function hash_password($password)
 	{
-		return base64_encode($this->hasher()->pbkdf2($password, \Config::get('auth.salt'), 10000, 32));
+		return base64_encode($this->hasher()->pbkdf2($password, \Config::get('auth.salt'), \Config::get('auth.iterations', 10000), 32));
 	}
 
 	/**
@@ -185,6 +187,54 @@ abstract class Auth_Login_Driver extends \Auth_Driver
 		is_null($this->hasher) and $this->hasher = new \PHPSecLib\Crypt_Hash();
 
 		return $this->hasher;
+	}
+
+	/**
+	 * Returns the list of defined groups
+	 *
+	 * @return  array
+	 */
+	public function groups($driver = null)
+	{
+		$result = array();
+
+		if ($driver === null)
+		{
+			foreach (\Auth::group(true) as $group)
+			{
+				method_exists($group, 'groups') and $result = \Arr::merge($result, $group->groups());
+			}
+		}
+		else
+		{
+			$result = \Auth::group($driver)->groups();
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Returns the list of defined roles
+	 *
+	 * @return  array
+	 */
+	public function roles($driver = null)
+	{
+		$result = array();
+
+		if ($driver === null)
+		{
+			foreach (\Auth::acl(true) as $acl)
+			{
+				method_exists($acl, 'roles') and $result = \Arr::merge($result, $acl->roles());
+			}
+		}
+		else
+		{
+			$result = \Auth::acl($driver)->roles();
+		}
+
+		return $result;
 	}
 
 	// ------------------------------------------------------------------------

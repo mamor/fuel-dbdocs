@@ -1,9 +1,11 @@
 <?php
 /**
+ * Fuel
+ *
  * Fuel is a fast, lightweight, community driven PHP5 framework.
  *
  * @package    Fuel
- * @version    1.5
+ * @version    1.6
  * @author     Fuel Development Team
  * @license    MIT License
  * @copyright  2010 - 2013 Fuel Development Team
@@ -21,7 +23,10 @@ Autoloader::add_classes(array(
 	'Orm\\Relation'     => __DIR__.'/classes/relation.php',
 
 	//Speclised models
-	'Orm\\Model_Soft'      => __DIR__.'/classes/model/soft.php',
+	'Orm\\Model_Soft'   => __DIR__.'/classes/model/soft.php',
+	'Orm\\Query_Soft'   => __DIR__.'/classes/query/soft.php',
+	'Orm\\Model_Temporal'   => __DIR__.'/classes/model/temporal.php',
+	'Orm\\Query_Temporal'   => __DIR__.'/classes/query/temporal.php',
 
 	// Observers
 	'Orm\\Observer'             => __DIR__.'/classes/observer.php',

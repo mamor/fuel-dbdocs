@@ -23,7 +23,6 @@ return array(
 		'packages' => array(
 			'orm',
 			'dbdocs',
-			'log',
 		),
 		'config' => array(
 			'dbdocs' => true,

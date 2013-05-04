@@ -1,9 +1,11 @@
 <?php
 /**
+ * Fuel
+ *
  * Fuel is a fast, lightweight, community driven PHP5 framework.
  *
  * @package    Fuel
- * @version    1.5
+ * @version    1.6
  * @author     Fuel Development Team
  * @license    MIT License
  * @copyright  2010 - 2013 Fuel Development Team
@@ -13,7 +15,7 @@
 namespace Auth;
 
 
-class Auth_Acl_SimpleAcl extends \Auth_Acl_Driver
+class Auth_Acl_Simpleacl extends \Auth_Acl_Driver
 {
 
 	protected static $_valid_roles = array();
@@ -21,6 +23,11 @@ class Auth_Acl_SimpleAcl extends \Auth_Acl_Driver
 	public static function _init()
 	{
 		static::$_valid_roles = array_keys(\Config::get('simpleauth.roles'));
+	}
+
+	public function roles()
+	{
+		return static::$_valid_roles;
 	}
 
 	public function has_access($condition, Array $entity)

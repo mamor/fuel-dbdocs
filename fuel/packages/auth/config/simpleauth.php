@@ -1,9 +1,11 @@
 <?php
 /**
+ * Fuel
+ *
  * Fuel is a fast, lightweight, community driven PHP5 framework.
  *
  * @package    Fuel
- * @version    1.5
+ * @version    1.6
  * @author     Fuel Development Team
  * @license    MIT License
  * @copyright  2010 - 2013 Fuel Development Team
@@ -41,6 +43,14 @@ return array(
 	 * This will allow you to use the group & acl driver for non-logged in users
 	 */
 	'guest_login' => true,
+
+	/**
+	 * This will allow the same user to be logged in multiple times.
+	 *
+	 * Note that this is less secure, as session hijacking countermeasures have to
+	 * be disabled for this to work!
+	 */
+	'multiple_logins' => false,
 
 	/**
 	 * Groups as id => array(name => <string>, roles => <array>)

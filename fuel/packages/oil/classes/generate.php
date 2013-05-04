@@ -1,9 +1,11 @@
 <?php
 /**
+ * Fuel
+ *
  * Fuel is a fast, lightweight, community driven PHP5 framework.
  *
  * @package    Fuel
- * @version    1.5
+ * @version    1.6
  * @author     Fuel Development Team
  * @license    MIT License
  * @copyright  2010 - 2013 Fuel Development Team
@@ -170,18 +172,20 @@ CONF;
 			$action_str .= '
 	public function action_'.$action.'()
 	{
+		$data["subnav"] = array(\''.$action.'\'=> \'active\' );
 		$this->template->title = \'' . \Inflector::humanize($name) .' &raquo; ' . \Inflector::humanize($action) . '\';
-		$this->template->content = View::forge(\''.$filename.'/' . $action .'\');
+		$this->template->content = View::forge(\''.$filename.'/' . $action .'\', $data);
 	}'.PHP_EOL;
 		}
 
 		$extends = \Cli::option('extends', 'Controller_Template');
+		$prefix = \Config::get('controller_prefix', 'Controller_');
 
 		// Build Controller
 		$controller = <<<CONTROLLER
 <?php
 
-class Controller_{$class_name} extends {$extends}
+class {$prefix}{$class_name} extends {$extends}
 {
 {$action_str}
 }
@@ -333,6 +337,16 @@ MODEL;
 				$time_type = (\Cli::option('mysql-timestamp')) ? 'timestamp' : 'int';
 
 				$timestamp_properties = array($created_at.':'.$time_type.':null[1]', $updated_at.':'.$time_type.':null[1]');
+
+				if ( \Cli::option('soft-delete'))
+				{
+					$deleted_at = \Cli::option('deleted-at', 'deleted_at');
+					is_string($deleted_at) or $deleted_at = 'deleted_at';
+					$properties .= "\n\t\t'".$deleted_at."',";
+
+					$timestamp_properties = array_merge($timestamp_properties, array($deleted_at.':'.$time_type.':null[1]'));
+				}
+
 				$args = array_merge($args, $timestamp_properties);
 			}
 
@@ -382,14 +396,61 @@ CONTENTS;
 			'mysql_timestamp' => $mysql_timestamp,$created_at
 		),
 		'Orm\Observer_UpdatedAt' => array(
-			'events' => array('before_save'),
+			'events' => array('before_update'),
 			'mysql_timestamp' => $mysql_timestamp,$updated_at
 		),
 	);
 CONTENTS;
+
+				if ( \Cli::option('soft-delete'))
+				{
+					if(($deleted_at = \Cli::option('deleted-at')) and is_string($updated_at))
+					{
+						$deleted_at = <<<CONTENTS
+
+		'deleted_field' => '{$deleted_at}',
+CONTENTS;
+					}
+					else
+					{
+						$deleted_at = '';
+					}
+
+					$contents .= <<<CONTENTS
+
+
+	protected static \$_soft_delete = array(
+		'mysql_timestamp' => $mysql_timestamp,$deleted_at
+	);
+CONTENTS;
+
+				}
+
 			}
 
-			$model = <<<MODEL
+			$contents .= <<<CONTENTS
+
+	protected static \$_table_name = '{$plural}';
+
+CONTENTS;
+
+			$model = '';
+			if ( \Cli::option('soft-delete'))
+			{
+				$model .= <<<MODEL
+<?php
+
+class Model_{$class_name} extends \Orm\Model_Soft
+{
+{$contents}
+}
+
+MODEL;
+			}
+			else
+			{
+				$model .= <<<MODEL
+
 <?php
 
 class Model_{$class_name} extends \Orm\Model
@@ -398,6 +459,7 @@ class Model_{$class_name} extends \Orm\Model
 }
 
 MODEL;
+			}
 		}
 
 		// Build the model
@@ -439,11 +501,20 @@ MODEL;
 			static::create($app_template, file_get_contents(\Package::exists('oil').'views/scaffolding/template.php'), 'view');
 		}
 
+		$subnav = '';
+		foreach($args as $nav_item)
+		{
+			$subnav .= "\t<li class='<?php echo Arr::get(\$subnav, \"{$nav_item}\" ); ?>'><?php echo Html::anchor('{$controller}/{$nav_item}','".\Inflector::humanize($nav_item)."');?></li>\n";
+		}
+
 		foreach ($args as $action)
 		{
 			$view_title = \Cli::option('with-viewmodel') ? '<?php echo $content; ?>' : \Inflector::humanize($action);
 
 			$view = <<<VIEW
+<ul class="nav nav-pills">
+{$subnav}
+</ul>
 <p>{$view_title}</p>
 VIEW;
 
@@ -547,7 +618,7 @@ VIEW;
 					$subjects = array(
 					 implode('_', array_slice($matches, array_search('in', $matches)+1)),
 					 implode('_', array_slice($matches, 0, array_search('to', $matches))),
-					 implode('_', array_slice($matches, array_search('to', $matches)+1, array_search('in', $matches)-2))
+					 implode('_', array_slice($matches, array_search('to', $matches)+1, array_search('in', $matches)-array_search('to', $matches)-1))
 				  );
 				}
 
@@ -844,7 +915,7 @@ CONTROLLER;
 	{
 		$output = <<<HELP
 Usage:
-  php oil [g|generate] [controller|model|migration|scaffold|views] [options]
+  php oil [g|generate] [config|controller|views|model|migration|scaffold|admin|task] [options]
 
 Runtime options:
   -f, [--force]    # Overwrite files that already exist
@@ -863,10 +934,11 @@ Examples:
   php oil g scaffold <modelname> [<fieldname1>:<type1> |<fieldname2>:<type2> |..]
   php oil g scaffold/template_subfolder <modelname> [<fieldname1>:<type1> |<fieldname2>:<type2> |..]
   php oil g config <filename> [<key1>:<value1> |<key2>:<value2> |..]
+  php oil g task <taskname> [<cmd1> |<cmd2> |..]
 
 Note that the next two lines are equivalent:
   php oil g scaffold <modelname> ...
-  php oil g scaffold/crud <modelname> ...
+  php oil g scaffold/orm <modelname> ...
 
 Documentation:
   http://docs.fuelphp.com/packages/oil/generate.html

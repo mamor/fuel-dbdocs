@@ -1,9 +1,11 @@
 <?php
 /**
+ * Fuel
+ *
  * Fuel is a fast, lightweight, community driven PHP5 framework.
  *
  * @package    Fuel
- * @version    1.5
+ * @version    1.6
  * @author     Fuel Development Team
  * @license    MIT License
  * @copyright  2010 - 2013 Fuel Development Team
@@ -12,18 +14,13 @@
 
 namespace Auth;
 
-
-class SimpleUserUpdateException extends \FuelException {}
-
-class SimpleUserWrongPassword extends \FuelException {}
-
 /**
  * SimpleAuth basic login driver
  *
  * @package     Fuel
  * @subpackage  Auth
  */
-class Auth_Login_SimpleAuth extends \Auth_Login_Driver
+class Auth_Login_Simpleauth extends \Auth_Login_Driver
 {
 
 	public static function _init()
@@ -51,7 +48,7 @@ class Auth_Login_SimpleAuth extends \Auth_Login_Driver
 	 * @var  array  SimpleAuth class config
 	 */
 	protected $config = array(
-		'drivers' => array('group' => array('SimpleGroup')),
+		'drivers' => array('group' => array('Simplegroup')),
 		'additional_fields' => array('profile_fields'),
 	);
 
@@ -76,8 +73,8 @@ class Auth_Login_SimpleAuth extends \Auth_Login_Driver
 					->execute(\Config::get('simpleauth.db_connection'))->current();
 			}
 
-			// return true when login was verified
-			if ($this->user and $this->user['login_hash'] === $login_hash)
+			// return true when login was verified, and either the hash matches or multiple logins are allowed
+			if ($this->user and (\Config::get('simpleauth.multiple_logins', false) or $this->user['login_hash'] === $login_hash))
 			{
 				return true;
 			}
@@ -92,7 +89,7 @@ class Auth_Login_SimpleAuth extends \Auth_Login_Driver
 	}
 
 	/**
-	 * Check the user exists before logging in
+	 * Check the user exists
 	 *
 	 * @return  bool
 	 */
@@ -107,7 +104,7 @@ class Auth_Login_SimpleAuth extends \Auth_Login_Driver
 		}
 
 		$password = $this->hash_password($password);
-		$this->user = \DB::select_array(\Config::get('simpleauth.table_columns', array('*')))
+		$user = \DB::select_array(\Config::get('simpleauth.table_columns', array('*')))
 			->where_open()
 			->where('username', '=', $username_or_email)
 			->or_where('email', '=', $username_or_email)
@@ -116,7 +113,7 @@ class Auth_Login_SimpleAuth extends \Auth_Login_Driver
 			->from(\Config::get('simpleauth.table_name'))
 			->execute(\Config::get('simpleauth.db_connection'))->current();
 
-		return $this->user ?: false;
+		return $user ?: false;
 	}
 
 	/**
@@ -300,6 +297,15 @@ class Auth_Login_SimpleAuth extends \Auth_Login_Driver
 			{
 				throw new \SimpleUserUpdateException('Email address is not valid', 7);
 			}
+			$matches = \DB::select()
+				->where('email', '=', $email)
+				->where('id', '!=', $current_values[0]['id'])
+				->from(\Config::get('simpleauth.table_name'))
+				->execute(\Config::get('simpleauth.db_connection'));
+			if (count($matches))
+			{
+				throw new \SimpleUserUpdateException('Email address is already in use', 11);
+			}
 			$update['email'] = $email;
 			unset($values['email']);
 		}
@@ -327,6 +333,8 @@ class Auth_Login_SimpleAuth extends \Auth_Login_Driver
 			}
 			$update['profile_fields'] = serialize($profile_fields);
 		}
+
+		$update['updated_at'] = \Date::forge()->get_timestamp();
 
 		$affected_rows = \DB::update(\Config::get('simpleauth.table_name'))
 			->set($update)
@@ -463,7 +471,29 @@ class Auth_Login_SimpleAuth extends \Auth_Login_Driver
 			return false;
 		}
 
-		return array(array('SimpleGroup', $this->user['group']));
+		return array(array('Simplegroup', $this->user['group']));
+	}
+
+	/**
+	 * Getter for user data
+	 *
+	 * @param  string  name of the user field to return
+	 * @param  mixed  value to return if the field requested does not exist
+	 *
+	 * @return  mixed
+	 */
+	public function get($field, $default = null)
+	{
+		if (isset($this->user[$field]))
+		{
+			return $this->user[$field];
+		}
+		elseif (isset($this->user['profile_fields']))
+		{
+			return $this->get_profile_fields($field, $default);
+		}
+
+		return $default;
 	}
 
 	/**
@@ -473,12 +503,7 @@ class Auth_Login_SimpleAuth extends \Auth_Login_Driver
 	 */
 	public function get_email()
 	{
-		if (empty($this->user))
-		{
-			return false;
-		}
-
-		return $this->user['email'];
+		return $this->get('email', false);
 	}
 
 	/**
